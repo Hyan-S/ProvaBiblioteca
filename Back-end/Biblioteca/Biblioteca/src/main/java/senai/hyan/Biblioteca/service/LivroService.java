@@ -64,9 +64,10 @@ public class LivroService {
         Livro livro = livroRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Livro não encontrado"));
 
-        if (livro.getStatus() != LivroStatus.DISPONIVEL) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Não é possível excluir livro emprestado");
+        boolean possuiEmprestimoAtivo = emprestimoRepository.existsByLivroIdAndDataDevolucaoEfetivaIsNull(id);
+        if (livro.getStatus() != LivroStatus.DISPONIVEL || possuiEmprestimoAtivo) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Não é possível excluir livro com empréstimo ativo");
         }
         livroRepository.delete(livro);
     }
