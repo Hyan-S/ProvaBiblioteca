@@ -1,19 +1,22 @@
 package senai.hyan.Biblioteca.entity;
 
-import java.sql.Date;
-import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Livro {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private String titulo;
@@ -21,28 +24,26 @@ public class Livro {
     @Column(nullable = false)
     private String autor;
 
+    @Column
+    private String isbn;
+
+    @Column
+    private Integer ano;
+
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String editora;
-
-    @Column
-    private int categoria;
-
-    @Column
-    private String ISBN;
-
-    @Column
     private LivroStatus status;
 
-    @Column
-    private String historico;
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    @JsonIgnoreProperties("hibernateLazyInitializer")
+    private Categoria categoria;
 
-    private Date anoPublicacao;
-
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -62,28 +63,20 @@ public class Livro {
         this.autor = autor;
     }
 
-    public String getEditora() {
-        return editora;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setEditora(String editora) {
-        this.editora = editora;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
-    public int getCategoria() {
-        return categoria;
+    public Integer getAno() {
+        return ano;
     }
 
-    public void setCategoria(int categoria) {
-        this.categoria = categoria;
-    }
-
-    public String getISBN() {
-        return ISBN;
-    }
-
-    public void setISBN(String iSBN) {
-        ISBN = iSBN;
+    public void setAno(Integer ano) {
+        this.ano = ano;
     }
 
     public LivroStatus getStatus() {
@@ -94,21 +87,11 @@ public class Livro {
         this.status = status;
     }
 
-    public String getHistorico() {
-        return historico;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setHistorico(String historico) {
-        this.historico = historico;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
-
-    public Date getAnoPublicacao() {
-        return anoPublicacao;
-    }
-
-    public void setAnoPublicacao(Date anoPublicacao) {
-        this.anoPublicacao = anoPublicacao;
-    }
-
-    
 }

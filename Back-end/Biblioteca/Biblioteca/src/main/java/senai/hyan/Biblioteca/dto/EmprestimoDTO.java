@@ -1,42 +1,20 @@
-package senai.hyan.Biblioteca.entity;
+package senai.hyan.Biblioteca.dto;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-
-@Entity
-public class Emprestimo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class EmprestimoDTO {
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "livro_id", nullable = false)
-    @JsonIgnoreProperties("hibernateLazyInitializer")
-    private Livro livro;
-
-    @Column(nullable = false)
+    private Long livroId;
+    private String livroTitulo;
     private String nomePessoa;
-
-    @Column
     private String telefone;
-
-    @Column(nullable = false)
     private LocalDate dataEmprestimo;
-
-    @Column(nullable = false)
     private LocalDate dataDevolucaoPrevista;
-
-    @Column
     private LocalDate dataDevolucaoEfetiva;
+    private Long diasAtraso;
+
+    public EmprestimoDTO() {
+    }
 
     public Long getId() {
         return id;
@@ -46,12 +24,20 @@ public class Emprestimo {
         this.id = id;
     }
 
-    public Livro getLivro() {
-        return livro;
+    public Long getLivroId() {
+        return livroId;
     }
 
-    public void setLivro(Livro livro) {
-        this.livro = livro;
+    public void setLivroId(Long livroId) {
+        this.livroId = livroId;
+    }
+
+    public String getLivroTitulo() {
+        return livroTitulo;
+    }
+
+    public void setLivroTitulo(String livroTitulo) {
+        this.livroTitulo = livroTitulo;
     }
 
     public String getNomePessoa() {
@@ -92,5 +78,13 @@ public class Emprestimo {
 
     public void setDataDevolucaoEfetiva(LocalDate dataDevolucaoEfetiva) {
         this.dataDevolucaoEfetiva = dataDevolucaoEfetiva;
+    }
+
+    public Long getDiasAtraso() {
+        return diasAtraso;
+    }
+
+    public void setDiasAtraso(Long diasAtraso) {
+        this.diasAtraso = diasAtraso;
     }
 }

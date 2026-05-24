@@ -1,0 +1,14 @@
+<header>
+  <h1>{{ title }}</h1>
+  <nav>
+    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+    <a routerLink="/categorias" routerLinkActive="active">Categorias</a>
+    <a routerLink="/livros" routerLinkActive="active">Livros</a>
+    <a routerLink="/emprestimos" routerLinkActive="active">Empréstimos</a>
+    <a routerLink="/atrasados" routerLinkActive="active">Atrasados</a>
+  </nav>
+</header>
+
+<main>
+  <router-outlet />
+</main>
